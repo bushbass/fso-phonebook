@@ -1,7 +1,10 @@
-import { useState, useRef } from 'react'
+import { useState, } from 'react'
+import PersonForm from './components/PersonForm'
+import Persons from './components/Persons'
+import Filter from './components/Filter'
 
 const App = () => {
-  const nameRef = useRef(null)
+
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
     { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
@@ -30,7 +33,6 @@ const App = () => {
       setPersons(persons.concat(nameToSet))
     setNewName('')
     setNewNumber('')
-    nameRef.current.focus()
 
   }
 
@@ -38,24 +40,13 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
 
-      <div style={{ marginBottom: "20px" }}>Filter shown with
-        <input type="text" value={searchText} onChange={handleSearchTextChange} />
-      </div>
+      <Filter searchText={searchText} handleSearchTextChange={handleSearchTextChange} />
 
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          name: <input ref={nameRef} value={newName} onChange={handleNameInputChange} />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberInputChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <PersonForm handleSubmit={handleSubmit} newName={newName} newNumber={newNumber} handleNameInputChange={handleNameInputChange} handleNumberInputChange={handleNumberInputChange} />
+
       <h2>Numbers</h2>
-      {persons.filter((person) => person.name.toLowerCase().includes(searchText.toLowerCase())).map((person, i) => <h3 key={i}>{person.name} {person.number}</h3>)}
+      <Persons persons={persons} searchText={searchText} />
 
     </div>
   )
