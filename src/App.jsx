@@ -52,6 +52,12 @@ const App = () => {
       .then(response => setPersons(persons.concat(response.data)))
   }
 
+  const deletePerson = (id) => {
+    if (window.confirm("are you sure you want to delete?")) {
+      personsService.deletePerson(id)
+        .then(setPersons(persons.filter(person => id !== person.id)))
+    }
+  }
 
   return (
     <div>
@@ -72,7 +78,8 @@ const App = () => {
       <h2>Numbers</h2>
       <Persons
         persons={persons}
-        searchText={searchText} />
+        searchText={searchText}
+        deletePerson={deletePerson} />
 
     </div>
   )
