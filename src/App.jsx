@@ -3,14 +3,13 @@ import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
 import axios from 'axios'
+import personsService from './services/personsService'
 
 const App = () => {
-  // useEffect(() => {
 
   useEffect(() => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
+    personsService.getAll()
       .then(response => {
         console.log('promise fulfilled')
         setPersons(response.data)
@@ -42,23 +41,38 @@ const App = () => {
     const nameToSet = { name: newName, number: newNumber }
     persons.some(person => person.name == nameToSet.name) ?
       alert(`${nameToSet.name} is already added to phone book`) :
-      setPersons(persons.concat(nameToSet))
+      createPerson(nameToSet)
+
     setNewName('')
     setNewNumber('')
-
   }
+
+  const createPerson = (person) => {
+    personsService.create(person)
+      .then(response => setPersons(persons.concat(response.data)))
+  }
+
 
   return (
     <div>
       <h2>Phonebook</h2>
 
-      <Filter searchText={searchText} handleSearchTextChange={handleSearchTextChange} />
+      <Filter
+        searchText={searchText}
+        handleSearchTextChange={handleSearchTextChange} />
 
 
-      <PersonForm handleSubmit={handleSubmit} newName={newName} newNumber={newNumber} handleNameInputChange={handleNameInputChange} handleNumberInputChange={handleNumberInputChange} />
+      <PersonForm
+        handleSubmit={handleSubmit}
+        newName={newName}
+        newNumber={newNumber}
+        handleNameInputChange={handleNameInputChange}
+        handleNumberInputChange={handleNumberInputChange} />
 
       <h2>Numbers</h2>
-      <Persons persons={persons} searchText={searchText} />
+      <Persons
+        persons={persons}
+        searchText={searchText} />
 
     </div>
   )
