@@ -4,6 +4,7 @@ import Persons from './components/Persons'
 import Filter from './components/Filter'
 import axios from 'axios'
 import personsService from './services/personsService'
+import Notification from './components/Notification'
 
 const App = () => {
 
@@ -25,6 +26,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [searchText, setSearchText] = useState('')
+  const [message, setMessage] = useState(null)
 
   const handleNameInputChange = (event) => {
     setNewName(event.target.value)
@@ -43,8 +45,15 @@ const App = () => {
       updatePerson(nameToSet) :
       createPerson(nameToSet)
 
+    setMessage(
+      `${nameToSet.name} was updated`
+    )
+    setTimeout(() => {
+      setMessage(null)
+    }, 5000)
     setNewName('')
     setNewNumber('')
+
   }
 
   const createPerson = (person) => {
@@ -71,7 +80,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-
+      <Notification message={message} />
       <Filter
         searchText={searchText}
         handleSearchTextChange={handleSearchTextChange} />
