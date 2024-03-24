@@ -40,7 +40,7 @@ const App = () => {
     event.preventDefault()
     const nameToSet = { name: newName, number: newNumber }
     persons.some(person => person.name == nameToSet.name) ?
-      alert(`${nameToSet.name} is already added to phone book`) :
+      updatePerson(nameToSet) :
       createPerson(nameToSet)
 
     setNewName('')
@@ -56,6 +56,15 @@ const App = () => {
     if (window.confirm("are you sure you want to delete?")) {
       personsService.deletePerson(id)
         .then(setPersons(persons.filter(person => id !== person.id)))
+    }
+  }
+
+  const updatePerson = (nameToSet) => {
+    let updatedPerson = persons.find(person => nameToSet.name == person.name)
+    if (window.confirm("This person already exists.  Replace the old number with a new one?")) {
+      updatedPerson.number = newNumber
+      personsService.update(updatedPerson.id, updatedPerson)
+        .then(response => console.log('response.data', response.data))
     }
   }
 

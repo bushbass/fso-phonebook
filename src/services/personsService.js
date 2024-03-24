@@ -18,6 +18,7 @@ const deletePerson = (id) => {
     return axios.delete(`${baseUrl}/${id}`)
 }
 
+
 export default {
     getAll,
     create,
