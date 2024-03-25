@@ -9,7 +9,7 @@ const Persons = ({ persons, searchText, deletePerson }) => {
                 .map((person, i) =>
                     <h3
                         key={i}>{person.name} {person.number}
-                        <button onClick={() => deletePerson(person.id)}>Delete {person.id}</button>
+                        <button className="delete-button" onClick={() => deletePerson(person.id)}>Delete {person.id}</button>
                     </h3>
                 )}
         </div>

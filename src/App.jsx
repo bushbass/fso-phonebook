@@ -21,10 +21,8 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
-    console.log('effect')
     personsService.getAll()
       .then(response => {
-        console.log('promise fulfilled')
         setPersons(response.data)
       })
   }, [errorMessage])
@@ -58,7 +56,6 @@ const App = () => {
   const createPerson = (person) => {
     personsService.create(person)
       .then(response => {
-        console.log('response in create', response)
         setPersons(persons.concat(response.data))
         setMessage(
           `${person.name} was created`
