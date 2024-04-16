@@ -56,6 +56,12 @@ const App = () => {
           `${person.name} was created`
         )
       })
+      .catch(error => {
+        console.log({ error })
+        setErrorMessage(
+          `${error.response.status} ${error.response.data.error}`
+        )
+      })
   }
 
   const deletePerson = (id) => {
@@ -79,7 +85,7 @@ const App = () => {
         .catch(error => {
           console.log({ error })
           setErrorMessage(
-            `${error.response.status} ${updatedPerson.name} was already deleted from the server`
+            `${error.response.status} ${updatedPerson.name} ${error.response.data.error}`
           )
         })
     }
